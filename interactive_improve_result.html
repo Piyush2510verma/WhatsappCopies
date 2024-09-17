@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Message Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Improved Message</h1>
+        
+        <div>
+            <h2>Original Message:</h2>
+            <p>{{ original_message|safe }}</p>
+        </div>
+        
+        <div>
+            <h2>Improved Message:</h2>
+            <p>{{ result|safe }}</p>
+        </div>
+        
+        <h2>Provide Additional Feedback</h2>
+        <form action="{{ url_for('improve_message_interactive') }}" method="POST">
+            <input type="hidden" name="generated_message" value="{{ original_message }}">
+            <label for="feedback">Your Feedback:</label>
+            <textarea name="feedback" id="feedback" rows="4" cols="50" required></textarea><br>
+            <button type="submit">Improve Message</button>
+        </form>
+        
+        <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>

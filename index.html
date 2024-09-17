@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Message Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .feedback {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Brand Message Analysis</h1>
+        <p>{{ analysis|safe }}</p>
+
+        <!-- Compare Your Message Form -->
+        <h2>Compare Your Message</h2>
+        <form action="/compare_message" method="post">
+            <label for="user_message">Enter your message for comparison:</label>
+            <textarea name="user_message" id="user_message" rows="5" required></textarea><br>
+            <button type="submit">Analyze Message</button>
+        </form>
+
+        <div>
+            {% if comparison_result %}
+                <h3>Comparison Result</h3>
+                <p>{{ comparison_result|safe }}</p>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <!-- Upload Excel Form -->
+        <h2>Upload Excel to Analyze Tone and Writing Style</h2>
+        <form action="/upload_excel" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".xlsx" required>
+            <button type="submit">Upload Excel</button>
+        </form>
+
+        <!-- Display Excel Analysis and Generate New Message Form -->
+        {% if excel_analysis %}
+            <h2>Excel Message Analysis</h2>
+            <div>{{ excel_analysis|safe }}</div>
+
+            <h2>Generate a New Message</h2>
+            <form action="/generate_message" method="post">
+                <label for="tone_change">Do you want to change the tone?</label>
+                <select name="tone_change" id="tone_change">
+                    <option value="">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <div id="tone_change_section" class="hidden">
+                    <label for="tone_change_description">Describe tone changes:</label>
+                    <textarea name="tone_change_description" id="tone_change_description" rows="4"></textarea>
+                </div>
+
+                <label for="occasion">Occasion:</label>
+                <select name="occasion" id="occasion">
+                    <option value="Diwali">Diwali</option>
+                    <option value="Holi">Holi</option>
+                    <option value="EOS">End of Season</option>
+                    <option value="Clearance Sale">Clearance Sale</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <div id="other_occasion_section" class="hidden">
+                    <label for="other_occasion">Specify Occasion:</label>
+                    <input type="text" name="other_occasion" id="other_occasion">
+                </div>
+
+                <label for="discount">Discount:</label>
+                <select name="discount" id="discount">
+                    <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <div id="other_discount_section" class="hidden">
+                    <label for="other_discount">Specify Discount:</label>
+                    <input type="text" name="other_discount" id="other_discount">
+                </div>
+
+                <label for="campaign_type">Campaign Type:</label>
+                <select name="campaign_type" id="campaign_type">
+                    <option value="Promotional">Promotional</option>
+                    <option value="Product Launch">Product Launch</option>
+                    <option value="Customer Retention">Customer Retention</option>
+                </select>
+
+                <button type="submit">Generate Message</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('tone_change').addEventListener('change', function() {
+            document.getElementById('tone_change_section').classList.toggle('hidden', this.value !== 'Yes');
+        });
+
+        document.getElementById('occasion').addEventListener('change', function() {
+            document.getElementById('other_occasion_section').classList.toggle('hidden', this.value !== 'other');
+        });
+
+        document.getElementById('discount').addEventListener('change', function() {
+            document.getElementById('other_discount_section').classList.toggle('hidden', this.value !== 'other');
+        });
+    </script>
+</body>
+</html>

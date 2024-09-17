@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .feedback {
+            margin-top: 20px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+        }
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Message Comparison and Analysis</h1>
+        
+        <h2>Feedback</h2>
+        <p>{{ feedback|safe }}</p>
+        
+        <h2>Tone and Style Analysis</h2>
+        <p>{{ tone_style_analysis|safe }}</p>
+        
+        <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>

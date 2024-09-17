@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improve Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .feedback {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Improve Your Message</h1>
+        <form action="/improve_message" method="post">
+            <label for="generated_message">Generated Message:</label><br>
+            <textarea name="generated_message" id="generated_message" rows="10" cols="50" required>{{ original_message }}</textarea><br><br>
+            <button type="submit">Improve Message</button>
+        </form>
+
+        {% if result %}
+            <div class="feedback">
+                <h2>Improved Message</h2>
+                <p>{{ result|safe }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
